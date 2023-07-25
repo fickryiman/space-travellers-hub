@@ -8,14 +8,14 @@ const Rockets = () => {
   const dispatch = useDispatch();
   const rockets = useSelector((state) => state.rockets.allRockets);
   const { loading } = useSelector((state) => state.rockets);
-  const [hasFetchedDataOnce, setHasFetchedDataOnce] = useState(false);
+  const [fetchedRockets, setHasFetchedDataOnce] = useState(false);
 
   useEffect(() => {
-    if (!hasFetchedDataOnce) {
+    if (!fetchedRockets) {
       dispatch(fetchRockets());
       setHasFetchedDataOnce((bool) => !bool);
     }
-  }, [hasFetchedDataOnce, dispatch]);
+  }, [fetchedRockets, dispatch]);
 
   if (loading) {
     return (
