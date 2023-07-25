@@ -35,8 +35,8 @@ const Rockets = () => {
               {rocket.description}
             </p>
             {rocket.reserved
-              ? <button type="button" className={css.cancelReservation} onClick={() => { dispatch(setReserve({ id: rocket.id, reserved: !rocket.reserved })); }}>Cancel Reservation</button>
-              : <button type="button" className={css.reserve} onClick={() => { dispatch(setReserve({ id: rocket.id, reserved: !rocket.reserved })); }}>Reserve Rocket</button> }
+              && <button type="button" className={css.cancelReservation} onClick={() => { dispatch(setReserve({ id: rocket.id, reserved: !rocket.reserved })); }}>Cancel Reservation</button> }
+            {!rocket.reserved && <button type="button" className={css.reserve} onClick={() => { dispatch(setReserve({ id: rocket.id, reserved: !rocket.reserved })); }}>Reserve Rocket</button> }
           </div>
         </div>
       ))}
