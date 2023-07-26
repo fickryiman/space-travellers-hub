@@ -36,12 +36,12 @@
   list-style-type: none;
 }
 
-.ul li a {
+.navigator {
   color: rgb(61, 163, 237);
   text-decoration: none;
 }
 
-.ul li a:active {
+.active {
   text-decoration: underline;
 }
 

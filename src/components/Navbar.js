@@ -6,42 +6,18 @@ const Navbar = () => (
   <nav className={css.nav}>
     <div className={css.logo}>
       <img src={planet} alt="Logo" />
-      <p>Space Travellers Hub</p>
+      <p>Space Travelers Hub</p>
     </div>
-    <ul className={css.ul} id="main-nav">
+    <ul className={css.ul}>
       <li>
-        <NavLink
-          to="/"
-          style={({ isActive }) => ({
-            textDecoration: isActive ? 'underline' : '',
-          })}
-        >
-          {' '}
-          Rockets
-        </NavLink>
+        <NavLink to="/" className={css.navigator} activeClassName="active"> Rockets </NavLink>
       </li>
       <li>
-        <NavLink
-          to="/missions"
-          style={({ isActive }) => ({
-            textDecoration: isActive ? 'underline' : '',
-          })}
-        >
-          {' '}
-          Missions
-        </NavLink>
+        <NavLink to="/missions" className={css.navigator} activeClassName="active"> Missions </NavLink>
       </li>
       <li className={css.sep}>|</li>
       <li>
-        <NavLink
-          to="/profile"
-          style={({ isActive }) => ({
-            textDecoration: isActive ? 'underline' : '',
-          })}
-        >
-          {' '}
-          My Profile
-        </NavLink>
+        <NavLink to="/profile" className={css.navigator} activeClassName="active"> My Profile </NavLink>
       </li>
     </ul>
   </nav>
