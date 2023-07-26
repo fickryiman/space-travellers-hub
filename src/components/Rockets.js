@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './Rockets.module.css';
 import { fetchRockets, setReserve } from '../redux/rockets/rocketsSlice';
@@ -8,10 +8,14 @@ const Rockets = () => {
   const dispatch = useDispatch();
   const rockets = useSelector((state) => state.rockets.allRockets);
   const { loading } = useSelector((state) => state.rockets);
+  const [fetchedRockets, setHasFetchedDataOnce] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchRockets());
-  }, [dispatch]);
+    if (!fetchedRockets) {
+      dispatch(fetchRockets());
+      setHasFetchedDataOnce((bool) => !bool);
+    }
+  }, [fetchedRockets, dispatch]);
 
   if (loading) {
     return (
@@ -28,7 +32,7 @@ const Rockets = () => {
             <img src={rocket.flickr_images} alt="rocket" />
           </div>
           <div className={css.info}>
-            <p className={css.title}>{rocket.name}</p>
+            <p className={css.title}>{rocket.rocket_name}</p>
             <p className={css.desc}>
               {rocket.reserved ? <span className={css.badge}>Reserved</span> : ''}
               {' '}
