@@ -3,16 +3,16 @@ table {
   border-collapse: collapse;
 }
 
+td {
+  padding: 0.5rem;
+}
+
 thead td {
   font-weight: bold;
 }
 
 .mission-name {
   width: 11%;
-}
-
-td {
-  padding: 0.5rem;
 }
 
 .mission-description {
