@@ -1,19 +1,13 @@
-.missionsDiv {
-  margin: 2.5%;
-}
-
-.table {
+table {
   border: 1px solid grey;
   border-collapse: collapse;
 }
 
-.tableHead {
+thead td {
   font-weight: bold;
-  font-size: large;
 }
 
-.missionName {
-  font-weight: bold;
+.mission-name {
   width: 11%;
 }
 
@@ -21,15 +15,15 @@ td {
   padding: 0.5rem;
 }
 
-.missionDescription {
+.mission-description {
   width: 65%;
 }
 
-.memberButton {
+.member-button {
   width: 7rem;
 }
 
-.memberButton button {
+.member-button button {
   width: 7.5rem;
   height: 1.5rem;
 }
@@ -40,12 +34,12 @@ th {
   border: 1px solid grey;
 }
 
-.joinButton {
+.join-button {
   width: 8.5rem;
   text-align: center;
 }
 
-.joinButton button {
+.join-button button {
   height: 2.5rem;
   width: 8rem;
 }
@@ -54,12 +48,12 @@ tbody tr:nth-child(odd) {
   background-color: gainsboro;
 }
 
-.notMember {
+.not-member {
   background-color: grey;
   color: white;
 }
 
-.activeMember {
+.active-member {
   background-color: mediumturquoise;
   color: white;
 }

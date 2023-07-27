@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import css from './Missions.module.css';
 import { fetchMissions, joinMission } from '../redux/missions/missionSlice';
 import LoadingSpinner from './Loading';
+import './Missions.css';
 
 const Missions = () => {
   const dispatch = useDispatch();
-  const missions = useSelector((state) => state.missions.allMissions);
-  const { loading } = useSelector((state) => state.missions);
+  const { missions, isLoading } = useSelector((state) => state.missions);
   const [fetchedMissions, setHasFetchedDataOnce] = useState(false);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ const Missions = () => {
     }
   }, [fetchedMissions, dispatch]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <LoadingSpinner />
@@ -25,9 +24,9 @@ const Missions = () => {
     );
   }
   return (
-    <div className={css.missionsDiv}>
+    <div className="missions-div">
       <table>
-        <thead className={css.tableHead}>
+        <thead>
           <tr>
             <td>Mission</td>
             <td>Description</td>
@@ -38,10 +37,10 @@ const Missions = () => {
         <tbody>
           {missions.map((mission) => (
             <tr key={mission.id}>
-              <td className={css.missionName}>{mission.mission_name}</td>
-              <td className={css.missionDescription}>{mission.description}</td>
-              <td className={css.memberButton}><button type="button">NOT A MEMBER</button></td>
-              <td className={css.joinButton}><button type="button" onClick={() => dispatch(joinMission(mission.id))}>JOIN MISSION</button></td>
+              <td className="mission-name">{mission.name}</td>
+              <td className="mission-description">{mission.description}</td>
+              <td className="member-button"><button type="button">NOT A MEMBER</button></td>
+              <td className="join-button"><button type="button" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>JOIN MISSION</button></td>
             </tr>
           ))}
         </tbody>
