@@ -17,6 +17,7 @@ td {
 
 .mission-description {
   width: 65%;
+  padding: 1% 0.5% 2% 0.5%;
 }
 
 .member-button {
@@ -46,6 +47,8 @@ thead td {
 .join-button button {
   height: 2.5rem;
   width: 8rem;
+  background-color: inherit;
+  border-radius: 4px;
 }
 
 tbody tr:nth-child(odd) {
@@ -58,6 +61,25 @@ tbody tr:nth-child(odd) {
 }
 
 .active-member {
-  background-color: mediumturquoise;
+  background-color: rgb(31, 192, 187);
   color: white;
+  border: 1px solid rgb(31, 192, 187);
+  border-radius: 4px;
+  width: 7.5rem;
+  height: 1.5rem;
+}
+
+.non-active {
+  background-color: grey;
+  border: 1px solid grey;
+  color: white;
+  border-radius: 8px;
+  width: 7.5rem;
+  height: 1.5rem;
+}
+
+.border-red {
+  border: 2px solid red;
+  background-color: white;
+  color: red;
 }

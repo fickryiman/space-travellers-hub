@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMissions, joinMission } from '../redux/missions/missionSlice';
 import LoadingSpinner from './Loading';
 import './Missions.css';
 
 const Missions = () => {
-  const dispatch = useDispatch();
   const { missions, isLoading } = useSelector((state) => state.missions);
-  const [fetchedMissions, setHasFetchedDataOnce] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!fetchedMissions) {
+    if (missions.length === 0) {
       dispatch(fetchMissions());
-      setHasFetchedDataOnce((bool) => !bool);
     }
-  }, [fetchedMissions, dispatch]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -39,8 +37,30 @@ const Missions = () => {
             <tr key={mission.id}>
               <td className="mission-name">{mission.name}</td>
               <td className="mission-description">{mission.description}</td>
-              <td className="member-button"><button type="button">NOT A MEMBER</button></td>
-              <td className="join-button"><button type="button" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>JOIN MISSION</button></td>
+              <td className="member-button">
+                {
+                !mission.reserved ? (
+                  <button className="non-active" type="button">NOT A MEMBER</button>
+                )
+                  : (
+                    <button className="active-member" type="button">Active Member</button>
+                  )
+                }
+              </td>
+              <td className="join-button">
+                {
+                !mission.reserved ? (
+                  <button type="button" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>
+                    Join Mission
+                  </button>
+                )
+                  : (
+                    <button type="button" className="border-red" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>
+                      Leave Mission
+                    </button>
+                  )
+                }
+              </td>
             </tr>
           ))}
         </tbody>

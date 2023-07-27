@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk, original } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import './missionSlice.css';
 
 const url = 'https://api.spacexdata.com/v3/missions';
 
@@ -18,43 +17,13 @@ const missionsSlice = createSlice({
   },
   reducers: {
     joinMission: (state, action) => {
-      const btn = document.getElementById(action.payload);
-
-      if (btn.classList.contains('border-red')) {
-        btn.classList.remove('border-red');
-        btn.innerText = 'Join Mission';
-
-        const newState = original(state.missions).map((mission) => {
-          if (mission.id !== action.payload) {
-            return mission;
-          }
-          return { ...mission, reserved: false };
-        });
-        state.newState = newState;
-      } else {
-        btn.classList.add('border-red');
-        btn.innerText = 'Leave Mission';
-
-        let newState;
-
-        if (state.newState) {
-          newState = state.newState.map((mission) => {
-            if (mission.id !== action.payload) {
-              return mission;
-            }
-            return { ...mission, reserved: true };
-          });
-          state.newState = newState;
-        } else {
-          newState = state.missions.map((mission) => {
-            if (mission.id !== action.payload) {
-              return mission;
-            }
-            return { ...mission, reserved: true };
-          });
-          state.newState = newState;
+      const newState = state.missions.map((mission) => {
+        if (mission.id !== action.payload) {
+          return { ...mission };
         }
-      }
+        return { ...mission, reserved: !mission.reserved };
+      });
+      return { ...state, missions: newState };
     },
   },
   extraReducers: (builder) => {
@@ -72,6 +41,7 @@ const missionsSlice = createSlice({
             id,
             name,
             description,
+            reserved: false,
           };
         });
         state.missions = missionsArr;
