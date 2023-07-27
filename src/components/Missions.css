@@ -7,6 +7,10 @@ td {
   padding: 0.5rem;
 }
 
+.missions-div {
+  margin: 2.7%;
+}
+
 .mission-name {
   width: 11%;
 }
