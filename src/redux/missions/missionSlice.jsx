@@ -1,49 +1,54 @@
-import { createSlice, createAsyncThunk, original } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const url = 'https://api.spacexdata.com/v3/missions';
+
 export const fetchMissions = createAsyncThunk('missions/fetch', async () => {
-  const missions = await axios.get('https://api.spacexdata.com/v3/missions');
-  const selectData = missions.data.map((item) => ({
-    id: item.mission_id,
-    mission_name: item.mission_name,
-    description: item.description,
-    reserved: false,
-  }));
-  return selectData;
+  const response = await axios.get(url);
+  return response.data;
 });
 
 const missionsSlice = createSlice({
   name: 'missions',
   initialState: {
-    loading: false,
-    allMissions: [],
+    isLoading: false,
+    missions: [],
     error: null,
   },
   reducers: {
     joinMission: (state, action) => {
-      const newState = original(state.missions).map((mission) => {
-        if (mission.missionId !== action.payload) {
-          return mission;
+      const newState = state.missions.map((mission) => {
+        if (mission.id !== action.payload) {
+          return { ...mission };
         }
-        return { ...mission, reserved: true };
+        return { ...mission, reserved: !mission.reserved };
       });
-      console.log(newState, action.payload);
+      return { ...state, missions: newState };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMissions.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
 
       .addCase(fetchMissions.fulfilled, (state, action) => {
-        state.loading = false;
-        state.allMissions = action.payload;
+        state.isLoading = false;
+        const missionsArr = action.payload.map((item) => {
+          const { mission_id: id, mission_name: name, description } = item;
+          return {
+            id,
+            name,
+            description,
+            reserved: false,
+          };
+        });
+        state.missions = missionsArr;
       })
 
       .addCase(fetchMissions.rejected, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },

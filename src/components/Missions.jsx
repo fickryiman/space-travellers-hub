@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import css from './Missions.module.css';
 import { fetchMissions, joinMission } from '../redux/missions/missionSlice';
 import LoadingSpinner from './Loading';
+import './Missions.css';
 
 const Missions = () => {
+  const { missions, isLoading } = useSelector((state) => state.missions);
   const dispatch = useDispatch();
-  const missions = useSelector((state) => state.missions.allMissions);
-  const { loading } = useSelector((state) => state.missions);
-  const [fetchedMissions, setHasFetchedDataOnce] = useState(false);
 
   useEffect(() => {
-    if (!fetchedMissions) {
+    if (missions.length === 0) {
       dispatch(fetchMissions());
-      setHasFetchedDataOnce((bool) => !bool);
     }
-  }, [fetchedMissions, dispatch]);
+  }, []);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <LoadingSpinner />
@@ -25,9 +22,9 @@ const Missions = () => {
     );
   }
   return (
-    <div className={css.missionsDiv}>
+    <div className="missions-div">
       <table>
-        <thead className={css.tableHead}>
+        <thead>
           <tr>
             <td>Mission</td>
             <td>Description</td>
@@ -38,10 +35,32 @@ const Missions = () => {
         <tbody>
           {missions.map((mission) => (
             <tr key={mission.id}>
-              <td className={css.missionName}>{mission.mission_name}</td>
-              <td className={css.missionDescription}>{mission.description}</td>
-              <td className={css.memberButton}><button type="button">NOT A MEMBER</button></td>
-              <td className={css.joinButton}><button type="button" onClick={() => dispatch(joinMission(mission.id))}>JOIN MISSION</button></td>
+              <td className="mission-name">{mission.name}</td>
+              <td className="mission-description">{mission.description}</td>
+              <td className="member-button">
+                {
+                !mission.reserved ? (
+                  <button className="non-active" type="button">NOT A MEMBER</button>
+                )
+                  : (
+                    <button className="active-member" type="button">Active Member</button>
+                  )
+                }
+              </td>
+              <td className="join-button">
+                {
+                !mission.reserved ? (
+                  <button type="button" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>
+                    Join Mission
+                  </button>
+                )
+                  : (
+                    <button type="button" className="border-red" id={mission.id} onClick={() => dispatch(joinMission(mission.id))}>
+                      Leave Mission
+                    </button>
+                  )
+                }
+              </td>
             </tr>
           ))}
         </tbody>
