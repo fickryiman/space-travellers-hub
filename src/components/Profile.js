@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useSelector } from 'react-redux';
 import css from './Profile.module.css';
 
-const Missions = () => {
+const Profile = () => {
   const rockets = useSelector((state) => state.rockets.allRockets);
   const reserved = rockets.filter((rocket) => rocket.reserved === true);
   return (
@@ -21,4 +21,4 @@ const Missions = () => {
   );
 };
 
-export default Missions;
+export default Profile;

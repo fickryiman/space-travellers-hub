@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './Rockets.module.css';
 import { fetchRockets, setReserve } from '../redux/rockets/rocketsSlice';
@@ -8,14 +8,12 @@ const Rockets = () => {
   const dispatch = useDispatch();
   const rockets = useSelector((state) => state.rockets.allRockets);
   const { loading } = useSelector((state) => state.rockets);
-  const [fetchedRockets, setHasFetchedDataOnce] = useState(false);
 
   useEffect(() => {
-    if (!fetchedRockets) {
+    if (rockets.length === 0) {
       dispatch(fetchRockets());
-      setHasFetchedDataOnce((bool) => !bool);
     }
-  }, [fetchedRockets, dispatch]);
+  }, [dispatch, rockets.length]);
 
   if (loading) {
     return (
