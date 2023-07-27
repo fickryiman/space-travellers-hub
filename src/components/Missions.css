@@ -7,10 +7,6 @@ td {
   padding: 0.5rem;
 }
 
-thead td {
-  font-weight: bold;
-}
-
 .mission-name {
   width: 11%;
 }
@@ -32,6 +28,10 @@ table,
 td,
 th {
   border: 1px solid grey;
+}
+
+thead td {
+  font-weight: bold;
 }
 
 .join-button {
