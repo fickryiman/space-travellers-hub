@@ -21,7 +21,7 @@
 .rocketsCont {
   display: flex;
   width: 45%;
-  height: auto;
+  max-height: 280px;
   justify-content: flex-start;
   border: 1px solid grey;
   border-radius: 5px;
