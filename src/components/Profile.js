@@ -4,13 +4,17 @@ import css from './Profile.module.css';
 const Profile = () => {
   const rockets = useSelector((state) => state.rockets.allRockets);
   const reserved = rockets.filter((rocket) => rocket.reserved === true);
+
+  const missions = useSelector((state) => state.missions.missions);
+  const joined = missions.filter((mission) => mission.reserved);
   return (
     <>
       <div className={css.container}>
         <div className={css.missions}>
           <p className={css.heading}>My Missions</p>
-          <p className={css.elem}>Mission 1</p>
-          <p className={css.elem}>Mission 1</p>
+          { joined.map((mission) => (
+            <p className={css.elem} key={mission.id}>{mission.name}</p>
+          ))}
         </div>
         <div className={css.rocketsCont}>
           <p className={css.heading}>My Rockets</p>
